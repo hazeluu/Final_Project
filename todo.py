@@ -131,4 +131,21 @@ if __name__ == "__main__":
         search_results = tasks.query_tasks(search_terms=args.query)
         if search_results:
             print("ID  | Age | Due Date  | Priority | Task")
-            print("--- | --- | --------- | --------
+            print("--- | --- | --------- | -------- | ----")
+            for task in search_results:
+                due_date = task.due_date or '-'
+                age = (datetime.now() - task.created).days
+                print(f"{task.id:<3} | {age:<3} | {due_date:<9} | {task.priority:<8} | {task.name}")
+        else:
+            print("No tasks match the search criteria.")
+
+    elif args.report:
+        report = tasks.generate_report()
+        print("ID  | Age | Due Date  | Priority | Task                  | Created               | Completed")
+        print("--- | --- | --------- | -------- | --------------------- | --------------------- | ---------------------")
+        for task in report:
+            due_date = task.due_date or '-'
+            age = (datetime.now() - task.created).days
+            created_str = task.created.strftime('%Y-%m-%d %H:%M:%S')
+            completed_str = task.completed.strftime('%Y-%m-%d %H:%M:%S') if task.completed else '-'
+            print(f"{task.id:<3} | {age:<3} | {due_date:<9} | {task.priority:<8} | {task.name:<21} | {created_str:<21} | {completed_str}")
