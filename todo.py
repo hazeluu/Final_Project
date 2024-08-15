@@ -2,7 +2,6 @@ from datetime import datetime
 import pickle
 import os
 
-# Task class to represent individual tasks
 class Task:
     def __init__(self, name, priority=1, due_date=None):
         self.name = name
@@ -10,7 +9,7 @@ class Task:
         self.due_date = due_date
         self.created = datetime.now()
         self.completed = None
-        self.id = None  # Unique ID assigned when the task is added to the task list
+        self.id = None  
 
     def mark_complete(self):
         """Marks the task as completed by setting the completed date."""
@@ -25,7 +24,6 @@ class Task:
                 f"due_date={self.due_date}, created={self.created}, completed={self.completed})")
 
 
-# Tasks class to manage a collection of Task objects
 class Tasks:
     def __init__(self, file_path='.todo.pickle'):
         self.file_path = os.path.expanduser(file_path)
@@ -83,13 +81,11 @@ class Tasks:
         return self.list_tasks(show_all=True)
 
 
-# Example usage or extension with a command-line interface using argparse
 if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Command Line Task Manager")
     
-    # Define commands and options
     parser.add_argument('--add', type=str, help="Add a new task with a description")
     parser.add_argument('--due', type=str, help="Due date for the task (optional)")
     parser.add_argument('--priority', type=int, choices=[1, 2, 3], default=1, help="Priority of the task (1-3, with 1 being default)")
